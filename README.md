@@ -32,20 +32,22 @@ Langchain `GraphQAChain` interface.
 
 ## Usage
 
-We will be interacting with Kùzu using its web-based UI, [Kùzu Explorer](https://docs.kuzudb.com/visualization/).
+We will largely be interacting with Kùzu using its web-based UI, [Kùzu Explorer](https://docs.kuzudb.com/visualization/).
 You can download the latest image of Kùzu Explorer from DockerHub provided using the provided `docker-compose.yml` file.
 Alternatively, you can type in the following command in your terminal:
 
 ```bash
 docker run -p 8000:8000 \
            -v ./ex_kuzu_db:/database \
+           -v ./data:/data \
            -e MODE=READ_WRITE \
            --rm kuzudb/explorer:dev
 ```
 
 > [!NOTE]
-> In this workshop, we will be working with the `kuzudb/explorer:dev` build of Kùzu Explorer to get access to the latest features.
-> In your own work, it's recommended to specify `kuzudb/explorer:latest`, which is the latest stable release.
+> In this workshop, we will be working with the `kuzudb/explorer:dev` build of Kùzu Explorer to get access to the latest features
+> at the current moment in time. These features will all make their way into the stable release in the near future.
+> In your own work, it's recommended to use `kuzudb/explorer:latest`, which is the latest stable release, to avoid unexpected bugs.
 
 ---
 
