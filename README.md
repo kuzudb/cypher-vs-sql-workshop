@@ -121,11 +121,11 @@ data.
 
 | Query | Description
 | --- | ---
-| 1 | Find all possible direct transfers between two accounts owned by persons with emails `georodaw366@hotmail.com` and `ezimmerman@yahoo.com`
-| 2 | Find all possible connections of type Transfer, including indirect ones up to length k = 5, between the accounts owned by `georodaw366@hotmail.com` and `ezimmerman@yahoo.com`. You can try k > 5 to also see how the number of paths increases rapidly.
-| 3 | Find the shortest connections of type Transfer between the accounts owned by `georodaw366@hotmail.com`and `ezimmerman@yahoo.com`
-| 4 | Find all connections of any type between the persons `georodaw366@hotmail.com` and `ezimmerman@yahoo.com`. We are searching for any possible shortest paths between these two persons, not just the transfers between accounts owned by them.
-| 5 | Find 3 persons who have all transferred money to each other (in at least one direction).
+| 1 | Find all possible direct transfers between two accounts owned by persons with emails `georodaw366@hotmail.com` and `ezimmerman@yahoo.com`.
+| 2 | Find all possible connections of type Transfer, including indirect ones up to length k = 5, between the accounts owned by `georodaw366@hotmail.com` and `ezimmerman@yahoo.com`. You can try k > 5 to also see how the number of paths increases rapidly. <br>**Hint:** Specify variable-length or [recursive](https://docs.kuzudb.com/cypher/query-clauses/match/#match-variable-lengthrecursive-relationships) relationships in Cypher using the Kleene star operator `*` followed by the min and max length for the paths.
+| 3 | Find the shortest connections of type Transfer between the accounts owned by `georodaw366@hotmail.com`and `ezimmerman@yahoo.com`. <br>**Hint:** Cypher has a built-in function for [shortest path](https://docs.kuzudb.com/cypher/query-clauses/match/#single-shortest-path).
+| 4 | Find all connections of any type between the persons `georodaw366@hotmail.com` and `ezimmerman@yahoo.com`. We are searching for any possible shortest paths between these two persons, not just the transfers between accounts owned by them. <br>**Hint:** Cypher has a built-in function for [all shortest paths](https://docs.kuzudb.com/cypher/query-clauses/match/#all-shortest-paths) which is useful when more than one shortest paths exist.
+| 5 | Find 3 persons who have all transferred money to each other (in at least one direction). <br>**Hint:** You can capture relationships in both directions by not specifying the `<` or `>` in your relationship pattern.
 | 6 | **a)** Find an important account that has the highest number of incoming transactions. <br>**Hint:** Use [group by](https://docs.kuzudb.com/cypher/query-clauses/return/#group-by-and-aggregations) and aggregate the *count* of incoming edges. <br> **b)** Find an important account that has received most dollars. <br>**Hint:** Do a [group by](https://docs.kuzudb.com/cypher/query-clauses/return/#group-by-and-aggregations)  and aggregate the *sum* of the amounts on the incoming edges.
 | 7 | Find the accounts that are the "most central". We will use the notion of highest “betweenness centrality” (BC). <br> **Note:** This part will be done in Python via the NetworkX library.
 
