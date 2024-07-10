@@ -1,12 +1,14 @@
 # TMLS 2024 Workshop
 
-This repo provided the code for the Toronto Machine Learning Summit 2024 Workshop held in Toronto,
-titled *Kùzu - A fast, scalable graph database for analytical queries*.
+This repo provides the code for the Toronto Machine Learning Summit 2024 Workshop held in Toronto,
+titled "*Kùzu - A fast, scalable graph database for analytical queries*".
 
 [Kùzu](https://github.com/kuzudb/kuzu)
 is an embedded graph database built for query speed and scalability. It is optimized for handling
 complex join-heavy analytical workloads on very large graphs. It implements the property graph
-data model via a Cypher query language interface.
+data model via a Cypher query language interface. At the end of this workshop, you'll take away
+some insights into how to use Kùzu for graph analysis and machine learning tasks, and also see
+how easy it is to use!
 
 ## Workshop Outline
 
@@ -125,4 +127,5 @@ data.
 | 6 | **a)** Find an important account that has the highest number of incoming transactions. <br>**Hint:** Use [group by](https://docs.kuzudb.com/cypher/query-clauses/return/#group-by-and-aggregations) and aggregate the *count* of incoming edges. <br> **b)** Find an important account that has received most dollars. <br>**Hint:** Do a [group by](https://docs.kuzudb.com/cypher/query-clauses/return/#group-by-and-aggregations)  and aggregate the *sum* of the amounts on the incoming edges.
 | 7 | Find the accounts that are the "most central". We will use the notion of highest “betweenness centrality” (BC). <br> **Note:** This part will be done in Python via the NetworkX library.
 
-> [!NOTE] Betweenness centrality is a measure of the number of shortest paths that pass through a node. It is calculated as the number of shortest paths that pass through a node divided by the total number of shortest paths between all pairs of nodes.
+> [!NOTE]
+> Betweenness centrality is a measure of the number of shortest paths that pass through a node. It is calculated as the number of shortest paths that pass through a node divided by the total number of shortest paths between all pairs of nodes.

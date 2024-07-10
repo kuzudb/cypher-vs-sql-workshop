@@ -3,7 +3,7 @@ services:
     image: kuzudb/explorer:dev
     restart: unless-stopped
     environment:
-      - MODE=READ_ONLY
+      - MODE=READ_WRITE
     ports:
       - 8000:8000
     volumes:
