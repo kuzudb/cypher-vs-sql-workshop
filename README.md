@@ -79,7 +79,8 @@ A summary of the dataset is provided below:
 - 21 nodes of type `Person`
 - 21 nodes of type `Account` (each `Person` has exactly one account)
 - 15 nodes of type `Address`
-- 42 relationships of type `Transfer`, where the transfers are in one direction only (for reasons of simplicity)
+- 42 relationships of type `Transfer`, where the transfers are directed from a source account `s` that has transfered money
+to a destination account `d`.
 
 The resulting graph as such has interesting structures and is small enough to visualize all at once
 in Kùzu explorer.
