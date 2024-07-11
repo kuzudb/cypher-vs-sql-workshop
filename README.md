@@ -8,7 +8,7 @@ is an embedded graph database built for query speed and scalability. It is optim
 complex join-heavy analytical workloads on very large graphs. It implements the property graph
 data model via a Cypher query language interface. At the end of this workshop, you'll take away
 some insights into how to use Kùzu for graph analysis and machine learning tasks, and also see
-how easy it is to use!
+how easy it is to use in combination with the rest of your stack!
 
 ## Workshop Outline
 
@@ -27,8 +27,7 @@ relational database. Along the way, it will become clear that some kinds of ques
 This section builds on the previous one. We will showcase the interoperability of Kùzu with the
 Python data science, machine learning and AI ecosystem. We will use the existing financial network
 to a) run a graph algorithm using NetworkX b) understand how Kùzu can be used as a graph backend for
-machine learning using PyTorch Geometric, and c) answer questions using natural language using the Kùzu-
-Langchain `GraphQAChain` interface.
+machine learning using PyTorch Geometric, and c) answer questions using natural language using the Kùzu-Langchain `KuzuQAChain` interface.
 
 ## Usage
 
@@ -73,7 +72,7 @@ into the transactions between individuals.
 A financial network dataset of persons, accounts, addresses and transfers between accounts is provided.
 Its schema can be represented as shown below.
 
-![](./assets/schema-viz.png)
+<img src="./assets/schema-viz.png" width="500">
 
 A summary of the dataset is provided below:
 - 21 nodes of type `Person`
@@ -81,16 +80,6 @@ A summary of the dataset is provided below:
 - 15 nodes of type `Address`
 - 42 relationships of type `Transfer`, where the transfers are directed from a source account `s` that has transfered money
 to a destination account `d`.
-
-The resulting graph as such has interesting structures and is small enough to visualize all at once
-in Kùzu explorer. You can get the below visualization in Kùzu Explorer with the following query:
-```
-TODO: Prashanth fill this
-```
-Write the above query in the shell panel of Kùzu Explorer and click the green play button to execute it.
-Kùzu Explorer will automatically display the results as a graph visualization.
-
-![](./assets/graph-viz.png)
 
 ## Data modelling
 
@@ -115,8 +104,20 @@ relationship tables in Kùzu, to give us the following six tables for our graph 
 
 ## DDL
 
-The DDL commands are provided in the `ddl` directory. Once they are run,
-the required tables will be created in the respective databases.
+The DDL commands are provided in the `ddl` directory. Copy-paste them into their respective interfaces
+to populate the data in the  required tables.
+
+## Graph visualization
+
+The resulting graph from this dataset has interesting structures, and is small enough to visualize all at once
+in Kùzu explorer. You can get the below visualization in Kùzu Explorer with the following query:
+```cypher
+MATCH (a)-[b]->(c) RETURN * LIMIT 200;
+```
+Write the above query in the shell panel of Kùzu Explorer and click the green play button to execute it.
+Kùzu Explorer will then display the results as a graph visualization.
+
+![](./assets/graph-viz.png)
 
 ## SQL queries
 
@@ -134,11 +135,11 @@ data.
 | Query | Description
 | --- | ---
 | 1 | Find all possible direct transfers between two accounts owned by persons with emails `georodaw366@hotmail.com` and `ezimmerman@yahoo.com`. <br>**Hint:** You need to look for transfers both from `georodaw366@hotmail.com` to `ezimmerman@yahoo.com` and vice versa. You can capture relationships in both directions by not specifying the `<` or `>` in your relationship pattern. See the documentation on [undirected relationship patterns](https://docs.kuzudb.com/cypher/query-clauses/match/#match-undirected-relationships) in MATCH clauses.
-| 2 | Find all possible connections of type Transfer, including indirect ones up to length k = 5, between the accounts owned by `georodaw366@hotmail.com` and `ezimmerman@yahoo.com`. You can try k > 5 to also see how the number of paths increases rapidly. <br>**Hint:** Specify variable-length or [recursive](https://docs.kuzudb.com/cypher/query-clauses/match/#match-variable-lengthrecursive-relationships) relationships in Cypher using the Kleene star operator `*` followed by the min and max length for the paths. If you want to count the number of paths, you can use `count(*)` in your RETURN clause.
-| 3 | Find the shortest connections of type Transfer between the accounts owned by `georodaw366@hotmail.com`and `ezimmerman@yahoo.com`. <br>**Hint:** Kùzu's Cypher dialect has a native clause to match [a single shortest paths](https://docs.kuzudb.com/cypher/query-clauses/match/#single-shortest-path) as well as [all shortest paths between nodes](https://docs.kuzudb.com/cypher/query-clauses/match/#all-shortest-paths). The latter can be used if you there are multiple paths of the same shortest length and you want to retrieve all of them.
-| 4 | Find all shortest connections of any type between the persons `georodaw366@hotmail.com` and `ezimmerman@yahoo.com`. We are searching for any possible shortest paths, i.e., the labels of the edges do not have to be only `Owns` and `Transfer`; they can include `LivesIn` as well. That is, the path between the two people can consist of any sequence of any labels. Further there can be multiple shortest paths. <br>**Hint:** Use Cypher's flexible relationahip matching using [multiple labels](https://docs.kuzudb.com/cypher/query-clauses/match/#match-relationships-with-multi-labels) or [any labels](https://docs.kuzudb.com/cypher/query-clauses/match/#match-relationships-with-any-label). 
-| 5 | Find 3 persons who have all transferred money to each other (in at least one direction). 
-| 6 | **a)** Find an important account that has the highest number of incoming transactions. <br>**Hint:** Use [group by and aggregate](https://docs.kuzudb.com/cypher/query-clauses/return/#group-by-and-aggregations) to *count* of incoming edges. For reference, possible aggregate functions are [here](https://docs.kuzudb.com/cypher/expressions/aggregate-functions/). <br> **b)** Find an important account that has received most dollars. <br>**Hint:** Do a [group by and aggregate](https://docs.kuzudb.com/cypher/query-clauses/return/#group-by-and-aggregations) to *sum* of the amounts on the incoming edges.
+| 2 | Find all possible connections of type `Transfer`, including indirect ones up to length k = 5, between the accounts owned by `georodaw366@hotmail.com` and `ezimmerman@yahoo.com`. You can try k > 5 to also see how the number of paths increases rapidly. <br>**Hint:** Specify variable-length or [recursive](https://docs.kuzudb.com/cypher/query-clauses/match/#match-variable-lengthrecursive-relationships) relationships in Cypher using the Kleene star operator `*` followed by the min and max length for the paths. If you want to count the number of paths, you can use `count(*)` in your `RETURN` clause.
+| 3 | Find the shortest connection of type Transfer between the accounts owned by `georodaw366@hotmail.com`and `ezimmerman@yahoo.com`. <br>**Hint:** Kùzu's Cypher dialect has a native clause to match [a single shortest path](https://docs.kuzudb.com/cypher/query-clauses/match/#single-shortest-path).
+| 4 | Find **all** shortest connections of any type between the persons `georodaw366@hotmail.com` and `ezimmerman@yahoo.com`. We are searching for any possible shortest paths, i.e., the labels of the edges do not have to be only `Owns` and `Transfer`; they can include `LivesIn` as well. That is, the path between the two people can consist of any sequence of _any_ labels. <br>**Hint:** Use Cypher's flexible relationship matching using [multiple labels](https://docs.kuzudb.com/cypher/query-clauses/match/#match-relationships-with-multi-labels) or [any labels](https://docs.kuzudb.com/cypher/query-clauses/match/#match-relationships-with-any-label). Kùzu Cypher also provides a clause to find [all shortest paths between nodes](https://docs.kuzudb.com/cypher/query-clauses/match/#all-shortest-paths), which can be used if you think there are multiple paths of the same shortest length and you want to retrieve all of them.
+| 5 | Find 3 persons who have all transferred money to each other (in at least one direction). <br>**Hint:** For this pattern query, you may need to eliminate duplicate results from undirected path matches. Cypher provides a [`DISTINCT`](https://docs.kuzudb.com/cypher/query-clauses/return/#using-distinct-for-duplicate-elimination) clause for exactly this.
+| 6 | **a)** Find an important account that has the highest number of incoming transactions. <br>**Hint:** Use [group by and aggregate](https://docs.kuzudb.com/cypher/query-clauses/return/#group-by-and-aggregations) to *count* of incoming edges. For reference, all possible aggregate functions are [here](https://docs.kuzudb.com/cypher/expressions/aggregate-functions/). <br> **b)** Find an important account that has received the most dollars. <br>**Hint:** Do a [group by and aggregate](https://docs.kuzudb.com/cypher/query-clauses/return/#group-by-and-aggregations) to *sum* of the amounts on the incoming edges.
 | 7 | Find the accounts that are the "most central". We will use the notion of highest “betweenness centrality” (BC). <br> **Note:** This part will be done in Python via the NetworkX library.
 
 > [!NOTE]
