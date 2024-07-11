@@ -78,7 +78,7 @@ A summary of the dataset is provided below:
 - 21 nodes of type `Person`
 - 21 nodes of type `Account` (each `Person` has exactly one account)
 - 15 nodes of type `Address`
-- 42 relationships of type `Transfer`, where the transfers are directed from a source account `s` that has transfered money
+- 21 relationships of type `Transfer`, where the transfers are directed from a source account `s` that has transferred money
 to a destination account `d`.
 
 ## Data modelling
