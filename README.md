@@ -83,7 +83,12 @@ A summary of the dataset is provided below:
 to a destination account `d`.
 
 The resulting graph as such has interesting structures and is small enough to visualize all at once
-in Kùzu explorer.
+in Kùzu explorer. You can get the below visualization in Kùzu Explorer with the following query:
+```
+TODO: Prashanth fill this
+```
+Write the above query in the shell panel of Kùzu Explorer and click the green play button to execute it.
+Kùzu Explorer will automatically display the results as a graph visualization.
 
 ![](./assets/graph-viz.png)
 
