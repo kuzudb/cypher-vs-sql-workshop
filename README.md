@@ -34,6 +34,12 @@ Langchain `GraphQAChain` interface.
 
 We will largely be interacting with Kùzu using its web-based UI, [Kùzu Explorer](https://docs.kuzudb.com/visualization/).
 You can download the latest image of Kùzu Explorer from DockerHub provided using the provided `docker-compose.yml` file.
+To do that, you can run the following commands in the directory where the `docker-compose.yml` is:
+```bash
+docker compose pull
+docker compose up
+```
+
 Alternatively, you can type in the following command in your terminal:
 
 ```bash
