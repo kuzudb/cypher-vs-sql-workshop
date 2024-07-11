@@ -7,7 +7,7 @@ TopAccount AS (
     SELECT it.account_id, it.in_degree
     FROM IncomingTransfers it
     ORDER BY it.in_degree DESC
-    LIMIT 1
+    LIMIT 3
 )
 SELECT p.name AS person, a.account_id AS accountID, p.email AS email, ta.in_degree
 FROM TopAccount ta
