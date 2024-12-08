@@ -1,6 +1,6 @@
 services:
   explorer:
-    image: kuzudb/explorer:dev
+    image: kuzudb/explorer:0.7.0
     restart: unless-stopped
     environment:
       - MODE=READ_WRITE
