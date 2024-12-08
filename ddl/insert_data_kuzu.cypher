@@ -30,13 +30,13 @@ COPY Person FROM
         delim = ",",
         escape = '"'
     )
-    RETURN CAST(id, "INT64"), name, state, CAST(zipcode, "INT64"), email
+    RETURN CAST(id AS INT64), name, state, CAST(zipcode AS INT64), email
 );
 
 COPY Account FROM
 (
     LOAD FROM 'data/account.csv' (header = true)
-    RETURN CAST(id, "INT64"), account_id, CAST(balance, "DOUBLE")
+    RETURN CAST(id AS INT64), account_id, CAST(balance AS DOUBLE)
 );
 
 COPY Address FROM
@@ -56,7 +56,7 @@ COPY Owns FROM
         delim = ",",
         escape = '"'
     )
-    RETURN CAST(owner, "INT64"), CAST(id, "INT64")
+    RETURN CAST(owner AS INT64), CAST(id AS INT64)
 );
 
 COPY LivesIn FROM
@@ -66,10 +66,10 @@ COPY LivesIn FROM
         delim = ",",
         escape = '"'
     )
-    RETURN CAST(id, "INT64"), address
+    RETURN CAST(id AS INT64), address
 );
 
 COPY Transfer FROM (
     LOAD FROM 'data/transfer.csv' (header = true)
-    RETURN CAST(source, "INT64"), CAST(target, "INT64"), CAST(amount, "DOUBLE")
+    RETURN CAST(source AS INT64), CAST(target AS INT64), CAST(amount AS DOUBLE)
 );

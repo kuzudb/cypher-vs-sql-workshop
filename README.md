@@ -1,14 +1,11 @@
-# TMLS 2024 Workshop
-
-This repo provides the code for the Toronto Machine Learning Summit 2024 Workshop held in Toronto,
-titled "*Kùzu - A fast, scalable graph database for analytical queries*".
+# Cypher vs. SQL workshop
 
 [Kùzu](https://github.com/kuzudb/kuzu)
-is an embedded graph database built for query speed and scalability. It is optimized for handling
-complex join-heavy analytical workloads on very large graphs. It implements the property graph
-data model via a Cypher query language interface. At the end of this workshop, you'll take away
-some insights into how to use Kùzu for graph analysis and machine learning tasks, and also see
-how easy it is to use in combination with the rest of your stack!
+is an embedded graph database built for query speed and scalability. It implements the property graph
+data model and is optimized for handling complex join-heavy analytical workloads on very large graphs.
+At the end of this workshop, you'll take away some insights into how to use Kùzu and its query
+language, Cypher, for graph analysis and also see how easy it is to use in combination with the rest
+of your stack!
 
 ## Workshop Outline
 
@@ -18,24 +15,23 @@ This workshop will be divided into two parts.
 
 We will be working on a simple dataset of a financial network. The aim is to write Cypher queries to do
 a graph analysis. To contrast it with a SQL-based analysis using a relational database, we will
-also answer the same questions that are asked via Cypher with SQL queries in DuckDB, an embedded
-relational database. Along the way, it will become clear that some kinds of questions are actually
-*really* hard (or borderline impossible) to answer in SQL, but are quite easy in Cypher.
+also answer the same questions that are asked via Cypher with SQL queries in [DuckDB](https://duckdb.org/),
+an embedded relational database. Along the way, it will become clear that some kinds of questions are actually
+*really* hard (or borderline impossible) to answer in SQL, but are _natural_ and _easy_ in Cypher.
 
-### 2. Machine learning and graph question-answering in Kùzu
+### 2. Analytics using graph algorithms
 
 This section builds on the previous one. We will showcase the interoperability of Kùzu with the
-Python data science, machine learning and AI ecosystem. We will use the existing financial network
-to a) run a graph algorithm using NetworkX b) understand how Kùzu can be used as a graph backend for
-machine learning using PyTorch Geometric, and c) answer questions using natural language using the Kùzu-Langchain `KuzuQAChain` interface.
+Python data science ecosystem. We will use the existing financial network to run a graph algorithm,
+`betweenness_centrality`, using NetworkX, a popular Python library for graph analysis.
 
 ## Usage
 
 We will largely be interacting with Kùzu using its web-based UI, [Kùzu Explorer](https://docs.kuzudb.com/visualization/).
-You can download the latest image of Kùzu Explorer from DockerHub provided using the provided `docker-compose.yml` file.
+You can download the specified image of Kùzu Explorer from DockerHub provided using the provided `docker-compose.yml` file.
 To do that, you can run the following commands in the directory where the `docker-compose.yml` is:
+
 ```bash
-docker compose pull
 docker compose up
 ```
 
@@ -46,26 +42,23 @@ docker run -p 8000:8000 \
            -v ./ex_kuzu_db:/database \
            -v ./data:/data \
            -e MODE=READ_WRITE \
-           --rm kuzudb/explorer:dev
+           --rm kuzudb/explorer:0.7.0
 ```
-
-> [!NOTE]
-> In this workshop, we will be working with the `kuzudb/explorer:dev` build of Kùzu Explorer to get access to the latest features
-> at the current moment in time. These features will all make their way into the stable release in the near future.
-> In your own work, it's recommended to use `kuzudb/explorer:latest`, which is the latest stable release, to avoid unexpected bugs.
 
 ---
 
 ## Problem statement
 
-Imagine you are an investigator at an organization that tracks financial crimes. Two email addresses
-have been flagged by law enforcement agencies, and both are now under suspicion for their potential
-involvement in fraudulent activities.
+We will define the problem statement for this workshop as follows:
 
-Your task is to analyze some data that consists of money transfers between individuals to assist in
-the ongoing investigation. The findings from this analysis will be crucial for an upcoming court case.
-To achieve this, you will delve into the dataset to uncover hidden patterns, connections, and insights
-into the transactions between individuals.
+> Imagine you are an investigator at an organization that tracks financial crimes. Two email addresses
+> have been flagged by law enforcement agencies, and both are now under suspicion for their potential
+> involvement in fraudulent activities.
+>
+> Your task is to analyze some data that consists of money transfers between individuals to assist in
+> the ongoing investigation. The findings from this analysis will be crucial for an upcoming court case.
+> To achieve this, you will delve into the dataset to uncover hidden patterns, connections, and insights
+> into the transactions between individuals.
 
 ## Dataset
 
@@ -111,8 +104,11 @@ to populate the data in the  required tables.
 
 The resulting graph from this dataset has interesting structures, and is small enough to visualize all at once
 in Kùzu explorer. You can get the below visualization in Kùzu Explorer with the following query:
+
 ```cypher
-MATCH (a)-[b]->(c) RETURN * LIMIT 200;
+MATCH (a)-[b]->(c)
+RETURN *
+LIMIT 200
 ```
 Write the above query in the shell panel of Kùzu Explorer and click the green play button to execute it.
 Kùzu Explorer will then display the results as a graph visualization.
@@ -133,7 +129,7 @@ data.
 ## Queries to answer
 
 | Query | Description
-| --- | ---
+| :---: | ---
 | 1 | Find all possible direct transfers to the account owned by the person whose email is `georodaw366@hotmail.com` <br>**Hint:** Specify an explicit pattern in your `MATCH` clause that respects the schema, use a `WHERE` predicate to filter the target person by their email, and then `RETURN` all the connected persons who made on a direct transfer to the target person's account.
 | 2 | Find all possible connections of type `Transfer`, including indirect ones up to length k = 5, between the accounts owned by `georodaw366@hotmail.com` and `ezimmerman@yahoo.com`. You can try k > 5 to also see how the number of paths increases rapidly. <br>**Hint:** Specify variable-length or [recursive](https://docs.kuzudb.com/cypher/query-clauses/match/#match-variable-lengthrecursive-relationships) relationships in Cypher using the Kleene star operator `*` followed by the min and max length for the paths. If you want to count the number of paths, you can use `count(*)` in your `RETURN` clause.
 | 3 | Find the shortest connection of type Transfer between the accounts owned by `georodaw366@hotmail.com`and `ezimmerman@yahoo.com`. <br>**Hint:** Kùzu's Cypher dialect has a native clause to match [a single shortest path](https://docs.kuzudb.com/cypher/query-clauses/match/#single-shortest-path).
