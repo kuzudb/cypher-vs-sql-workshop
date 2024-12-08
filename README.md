@@ -19,12 +19,11 @@ also answer the same questions that are asked via Cypher with SQL queries in [Du
 an embedded relational database. Along the way, it will become clear that some kinds of questions are actually
 *really* hard (or borderline impossible) to answer in SQL, but are _natural_ and _easy_ in Cypher.
 
-### 2. Machine learning and graph question-answering in Kùzu
+### 2. Analytics using graph algorithms
 
 This section builds on the previous one. We will showcase the interoperability of Kùzu with the
-Python data science, machine learning and AI ecosystem. We will use the existing financial network
-to a) run a graph algorithm using NetworkX b) understand how Kùzu can be used as a graph backend for
-machine learning using PyTorch Geometric, and c) answer questions using natural language using the Kùzu-Langchain `KuzuQAChain` interface.
+Python data science ecosystem. We will use the existing financial network to run a graph algorithm,
+`betweenness_centrality`, using NetworkX, a popular Python library for graph analysis.
 
 ## Usage
 
