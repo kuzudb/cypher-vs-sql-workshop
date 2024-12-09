@@ -25,16 +25,12 @@ This section builds on the previous one. We will showcase the interoperability o
 Python data science ecosystem. We will use the existing financial network to run a graph algorithm,
 `betweenness_centrality`, using NetworkX, a popular Python library for graph analysis.
 
-## Environment setup
+## Kùzu Explorer
 
-We will be using the following tools:
-- [Kùzu CLI](https://docs.kuzudb.com/installation/)
+Ensure you have Docker installed on your machine.
+
 - [Docker](https://docs.docker.com/get-docker/)
 - [Docker Compose](https://docs.docker.com/compose/install/)
-- [Python](https://www.python.org/downloads/)
-- [DuckDB CLI](https://duckdb.org/docs/installation/) (optional)
-
-## Usage
 
 We will largely be interacting with Kùzu using its web-based UI, [Kùzu Explorer](https://docs.kuzudb.com/visualization/).
 You can download the specified image of Kùzu Explorer from DockerHub provided using the provided `docker-compose.yml` file.
@@ -53,6 +49,13 @@ docker run -p 8000:8000 \
            -e MODE=READ_WRITE \
            --rm kuzudb/explorer:0.7.0
 ```
+
+## Environment setup
+
+We will be using the following tools:
+- [Kùzu CLI](https://docs.kuzudb.com/installation/)
+- [DuckDB CLI](https://duckdb.org/docs/installation/)
+- [Python](https://www.python.org/downloads/)
 
 ---
 
