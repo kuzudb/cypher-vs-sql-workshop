@@ -28,11 +28,11 @@ Python data science ecosystem. We will use the existing financial network to run
 ## Environment setup
 
 We will be using the following tools:
-- [Kùzu](https://docs.kuzudb.com/get-started/installation/) CLI
+- [Kùzu CLI](https://docs.kuzudb.com/installation/)
 - [Docker](https://docs.docker.com/get-docker/)
 - [Docker Compose](https://docs.docker.com/compose/install/)
 - [Python](https://www.python.org/downloads/)
-- [DuckDB](https://duckdb.org/docs/installation/) CLI (optional)
+- [DuckDB CLI](https://duckdb.org/docs/installation/) (optional)
 
 ## Usage
 
