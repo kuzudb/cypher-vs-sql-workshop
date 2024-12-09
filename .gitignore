@@ -156,5 +156,5 @@ cython_debug/
 .DS_Store
 
 # Custom
-ex_db_kuzu
+ex_kuzu_db
 ex_db.duckdb
