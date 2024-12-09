@@ -57,6 +57,12 @@ docker run -p 8000:8000 \
 
 ## Environment setup
 
+This subsection is totally optional -- you can install the CLI tools for Kùzu and DuckDB on your machine
+to also run the Cypher/SQL queries via their CLI interfaces.
+
+If you want to run the provided Python notebook to run graph algorithms, you will need to install
+Python and a local virtual environment.
+
 We will be using the following tools:
 - [Kùzu CLI](https://docs.kuzudb.com/installation/)
 - [DuckDB CLI](https://duckdb.org/docs/installation/)
@@ -88,7 +94,7 @@ A summary of the dataset is provided below:
 - 21 nodes of type `Person`
 - 21 nodes of type `Account` (each `Person` has exactly one account)
 - 15 nodes of type `Address`
-- 21 relationships of type `Transfer`, where the transfers are directed from a source account `s` that has transferred money
+- 22 relationships of type `Transfer`, where the transfers are directed from a source account `s` that has transferred money
 to a destination account `d`.
 
 ## Data modelling
@@ -114,8 +120,11 @@ relationship tables in Kùzu, to give us the following six tables for our graph 
 
 ## DDL
 
-The DDL commands are provided in the `ddl` directory. Copy-paste them into their respective interfaces
-to populate the data in the  required tables.
+The DDL commands are provided in the `ddl` directory. Copy-paste the `./ddl/*.cypher` file
+into their respective interfaces to populate the data in the required Kùzu database.
+
+If you want to also run the SQL queries in DuckDB, you can do so by running the `./ddl/insert_data_duckdb.sql`
+file in the DuckDB CLI.
 
 ## Graph visualization
 
@@ -131,11 +140,6 @@ Write the above query in the shell panel of Kùzu Explorer and click the green p
 Kùzu Explorer will then display the results as a graph visualization.
 
 ![](./assets/graph-viz.png)
-
-## SQL queries
-
-The SQL queries that are possible to write for each corresponding Cypher query are provided in the `sql` directory.
-it is not required to run these queries for the workshop -- they are provided for reference.
 
 ## Cypher queries
 
@@ -153,9 +157,14 @@ data.
 | 2 | Find **all possible** direct or indirect `Transfer` flows/paths **from** an account owned by George **to** to an account owned by `ezimmerman@yahoo.com` (This person's name is "Edward"). For indirect transfers, only find those up to length 5.  <br>**Hint:** Specify variable-length or [recursive](https://docs.kuzudb.com/cypher/query-clauses/match/#match-variable-lengthrecursive-relationships) relationships in Cypher using the Kleene star operator `*` followed by the min and max length for the paths.
 | 3a | Find a **shortest** `Transfer` path **from** George's account to Edward's account. <br>**Hint:** Kùzu's Cypher dialect has a native clause to match [a single shortest path](https://docs.kuzudb.com/cypher/query-clauses/match/#single-shortest-path).
 | 3b | Find **all shortest** `Transfer` paths **from** George's account to Edward's account. <br>**Hint:** Kùzu's Cypher dialect has a native clause to match [all shortest paths](https://docs.kuzudb.com/cypher/query-clauses/match/#all-shortest-paths).
-| 4 | Find **all** indirect connections of **any type** between the `Person` nodes representing George and Edward up to length 5. We are searching for any possible paths, i.e., the labels of the edges do not have to be only `Owns` or `Transfer`; they can also be `LivesIn` as well. That is, the path between the two people can consist of any sequence of _any_ labels. Further, we also do not need the connections to be in a particular direction. <br>**Hint:** Use Cypher's flexible relationship matching using [multiple labels](https://docs.kuzudb.com/cypher/query-clauses/match/#match-relationships-with-multi-labels) or [any labels](https://docs.kuzudb.com/cypher/query-clauses/match/#match-relationships-with-any-label). Also use the undirected relationship patterns for the `-[:Transfer]-` to avoid getting an empty result.
+| 4 | Find **all** direct and indirect connections of **any type** between the `Person` nodes representing George and Edward up to length 5. We are searching for any possible paths, i.e., the labels of the edges do not have to be only `Owns` or `Transfer`; they can also be `LivesIn` as well. That is, the path between the two people can consist of any sequence of _any_ labels. Further, we also do not need the connections to be in a particular direction. <br>**Hint:** Use Cypher's flexible relationship matching using [multiple labels](https://docs.kuzudb.com/cypher/query-clauses/match/#match-relationships-with-multi-labels) or [any labels](https://docs.kuzudb.com/cypher/query-clauses/match/#match-relationships-with-any-label). Also use the undirected relationship patterns for the `-[:Transfer]-` to avoid getting an empty result.
 | 5 | **a)** Find the account that has the highest number of incoming transactions. <br>**Hint:** Use [group by and aggregate](https://docs.kuzudb.com/cypher/query-clauses/return/#group-by-and-aggregations) to *count* of incoming edges. For reference, all possible aggregate functions are [here](https://docs.kuzudb.com/cypher/expressions/aggregate-functions/). <br> **b)** Find an important account that has received the most dollars. <br>**Hint:** Do a [group by and aggregate](https://docs.kuzudb.com/cypher/query-clauses/return/#group-by-and-aggregations) to *sum* of the amounts on the incoming edges.
 | 6 | Find the accounts that are the "most central" using a graph algorithm. We will use the notion of highest “betweenness centrality” (BC). <br> **Note:** This part will be done in Python via the NetworkX library.
 
 > [!NOTE]
 > Betweenness centrality is a measure of the number of shortest paths that pass through a node. It is calculated as the number of shortest paths that pass through a node divided by the total number of shortest paths between all pairs of nodes.
+
+## SQL queries
+
+The SQL queries that are possible to write for each corresponding Cypher query are provided in the `sql` directory.
+it is not required to run these queries for the workshop -- they are provided for reference.
