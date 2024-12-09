@@ -27,13 +27,14 @@ Python data science ecosystem. We will use the existing financial network to run
 
 ## Kùzu Explorer
 
-Ensure you have Docker installed on your machine.
+
+We will largely be interacting with Kùzu using its web-based UI, [Kùzu Explorer](https://docs.kuzudb.com/visualization/).
+To run Kùzu Explorer, you need to first ensure that Docker is installed on your machine:
 
 - [Docker](https://docs.docker.com/get-docker/)
 - [Docker Compose](https://docs.docker.com/compose/install/)
 
-We will largely be interacting with Kùzu using its web-based UI, [Kùzu Explorer](https://docs.kuzudb.com/visualization/).
-You can download the specified image of Kùzu Explorer from DockerHub provided using the provided `docker-compose.yml` file.
+Next, you can download the specified image of Kùzu Explorer from DockerHub provided using the provided `docker-compose.yml` file.
 To do that, you can run the following commands in the directory where the `docker-compose.yml` is:
 
 ```bash
