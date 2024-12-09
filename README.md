@@ -34,7 +34,7 @@ To run Kùzu Explorer, you need to first ensure that Docker is installed on your
 - [Docker](https://docs.docker.com/get-docker/)
 - [Docker Compose](https://docs.docker.com/compose/install/)
 
-Next, you can download the specified image of Kùzu Explorer from DockerHub provided using the provided `docker-compose.yml` file.
+Next, you can download the specified image of Kùzu Explorer from DockerHub provided using the provided [`docker-compose.yml`](https://github.com/kuzudb/cypher-vs-sql-workshop/blob/main/docker-compose.yml) file.
 To do that, you can run the following commands in the directory where the `docker-compose.yml` is:
 
 ```bash
