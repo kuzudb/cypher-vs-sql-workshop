@@ -43,6 +43,7 @@ To do that, you can run the following commands in the directory where the `docke
 ```bash
 docker compose up
 ```
+The above command might take a while but at the end of it will run Kùzu Explorer on your http://localhost:8000/.
 
 Alternatively, you can type in the following command in your terminal:
 
