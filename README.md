@@ -29,12 +29,15 @@ Python data science ecosystem. We will use the existing financial network to run
 
 
 We will largely be interacting with Kùzu using its web-based UI, [Kùzu Explorer](https://docs.kuzudb.com/visualization/).
-To run Kùzu Explorer, you need to first ensure that Docker is installed on your machine:
+Here are the steps to run Kùzu Explorer.
+
+1. You need to first ensure that Docker is installed on your machine:
 
 - [Docker](https://docs.docker.com/get-docker/)
 - [Docker Compose](https://docs.docker.com/compose/install/)
 
-Next, you can download the specified image of Kùzu Explorer from DockerHub provided using the provided [`docker-compose.yml`](https://github.com/kuzudb/cypher-vs-sql-workshop/blob/main/docker-compose.yml) file.
+2. Once you have Docker installed, please start Docker. This is usually done by launching Docker Desktop application.
+3. Next, you can download the specified image of Kùzu Explorer from DockerHub provided using the provided [`docker-compose.yml`](https://github.com/kuzudb/cypher-vs-sql-workshop/blob/main/docker-compose.yml) file.
 To do that, you can run the following commands in the directory where the `docker-compose.yml` is:
 
 ```bash
