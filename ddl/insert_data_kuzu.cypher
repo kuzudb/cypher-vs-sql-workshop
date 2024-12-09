@@ -25,7 +25,7 @@ CREATE REL TABLE IF NOT EXISTS Transfer (FROM Account TO Account, amount DOUBLE)
 
 COPY Person FROM
 (
-    LOAD FROM 'data/person.csv' (
+    LOAD FROM '/data/person.csv' (
         header = true,
         delim = ",",
         escape = '"'
@@ -35,13 +35,13 @@ COPY Person FROM
 
 COPY Account FROM
 (
-    LOAD FROM 'data/account.csv' (header = true)
+    LOAD FROM '/data/account.csv' (header = true)
     RETURN CAST(id AS INT64), account_id, CAST(balance AS DOUBLE)
 );
 
 COPY Address FROM
 (
-    LOAD FROM 'data/person.csv' (
+    LOAD FROM '/data/person.csv' (
         header = true,
         delim = ",",
         escape = '"'
@@ -51,7 +51,7 @@ COPY Address FROM
 
 COPY Owns FROM
 (
-    LOAD FROM 'data/account.csv' (
+    LOAD FROM '/data/account.csv' (
         header = true,
         delim = ",",
         escape = '"'
@@ -61,7 +61,7 @@ COPY Owns FROM
 
 COPY LivesIn FROM
 (
-    LOAD FROM 'data/person.csv' (
+    LOAD FROM '/data/person.csv' (
         header = true,
         delim = ",",
         escape = '"'
@@ -70,6 +70,6 @@ COPY LivesIn FROM
 );
 
 COPY Transfer FROM (
-    LOAD FROM 'data/transfer.csv' (header = true)
+    LOAD FROM '/data/transfer.csv' (header = true)
     RETURN CAST(source AS INT64), CAST(target AS INT64), CAST(amount AS DOUBLE)
 );
