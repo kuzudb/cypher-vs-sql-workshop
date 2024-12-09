@@ -15,61 +15,45 @@ CREATE NODE TABLE IF NOT EXISTS Address (
 CREATE NODE TABLE IF NOT EXISTS Account (
     id INT64,
     account_id STRING,
-    balance DOUBLE,
+    balance INT64,
     PRIMARY KEY (id)
 );
 
 CREATE REL TABLE IF NOT EXISTS Owns (FROM Person TO Account);
 CREATE REL TABLE IF NOT EXISTS LivesIn (FROM Person TO Address);
-CREATE REL TABLE IF NOT EXISTS Transfer (FROM Account TO Account, amount DOUBLE);
+CREATE REL TABLE IF NOT EXISTS Transfer (FROM Account TO Account, amount INT64);
 
 COPY Person FROM
 (
-    LOAD FROM '/data/person.csv' (
-        header = true,
-        delim = ",",
-        escape = '"'
-    )
-    RETURN CAST(id AS INT64), name, state, CAST(zipcode AS INT64), email
+    LOAD FROM '/data/person.csv'
+    RETURN id, name, state, zipcode, email
 );
 
 COPY Account FROM
 (
-    LOAD FROM '/data/account.csv' (header = true)
-    RETURN CAST(id AS INT64), account_id, CAST(balance AS DOUBLE)
+    LOAD FROM '/data/account.csv'
+    RETURN id, account_id, balance
 );
 
 COPY Address FROM
 (
-    LOAD FROM '/data/person.csv' (
-        header = true,
-        delim = ",",
-        escape = '"'
-    )
+    LOAD FROM '/data/person.csv'
     RETURN DISTINCT address
 );
 
 COPY Owns FROM
 (
-    LOAD FROM '/data/account.csv' (
-        header = true,
-        delim = ",",
-        escape = '"'
-    )
-    RETURN CAST(owner AS INT64), CAST(id AS INT64)
+    LOAD FROM '/data/account.csv'
+    RETURN owner, id
 );
 
 COPY LivesIn FROM
 (
-    LOAD FROM '/data/person.csv' (
-        header = true,
-        delim = ",",
-        escape = '"'
-    )
-    RETURN CAST(id AS INT64), address
+    LOAD FROM '/data/person.csv'
+    RETURN id, address
 );
 
 COPY Transfer FROM (
-    LOAD FROM '/data/transfer.csv' (header = true)
-    RETURN CAST(source AS INT64), CAST(target AS INT64), CAST(amount AS DOUBLE)
+    LOAD FROM '/data/transfer.csv'
+    RETURN source, target, amount
 );

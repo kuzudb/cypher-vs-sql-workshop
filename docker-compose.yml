@@ -6,5 +6,5 @@ services:
     ports:
       - 8000:8000
     volumes:
-      - ./ex_db_kuzu:/database
+      - ./ex_kuzu_db:/database
       - ./data:/data
